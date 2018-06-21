@@ -1,12 +1,16 @@
 'use strict';
 
+// Give me a string and I'll tell you if it's a valid npm package name.
 const validateProjectName = require('validate-npm-package-name');
 const chalk = require('chalk');
 const commander = require('commander');
+// fs-extra adds file system methods that aren't included in the native fs module
+// and adds promise support to the fs methods.
 const fs = require('fs-extra');
 const path = require('path');
 const execSync = require('child_process').execSync;
 const spawn = require('cross-spawn');
+// The semantic versioner for npm
 const semver = require('semver');
 const dns = require('dns');
 const tmp = require('tmp');
@@ -123,6 +127,14 @@ if (typeof projectName === 'undefined') {
   process.exit(1);
 }
 
+function printValidationResults(results) {
+  if (typeof results !== 'undefined') {
+    results.forEach(error => {
+      console.error(chalk.red(`  *  ${error}`));
+    });
+  }
+}
+
 const hiddenProgram = new commander.Command()
   .option(
     '--internal-testing-template <path-to-template>',
@@ -144,6 +156,8 @@ function createApp(name, verbose, version, useNpm, template) {
   const appName = path.basename(root);
 
   checkAppName(appName);
+  // Ensures that the directory exists. If the directory structure does not exist,
+  // it is created. Like mkdir -p.
   fs.ensureDirSync(name);
   if (!isSafeToCreateProjectIn(root, name)) {
     process.exit(1);
@@ -312,6 +326,7 @@ function run(
         'init.js'
       );
       const init = require(scriptsPath);
+      // call node_modules/react-scripts/scripts/init.js
       init(root, appName, verbose, originalDirectory, template);
 
       if (version === 'react-scripts@0.9.x') {
