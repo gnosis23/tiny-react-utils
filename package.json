@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node ./src/index",
+    "start": "node ./src/index",
+    "test":  "node ./src/test",
     "init": "node ./scripts/createReactApp"
   },
   "repository": {
