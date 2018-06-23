@@ -18,6 +18,9 @@
     "scripts",
     "template"
   ],
+  "bin": {
+    "react-scripts": "./bin/react-scripts.js"
+  },
   "dependencies": {
     "browserslist": "3.2.6",
     "chalk": "1.1.3",
