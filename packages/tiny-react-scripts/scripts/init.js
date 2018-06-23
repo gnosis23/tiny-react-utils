@@ -3,7 +3,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const chalk = require('chalk');
-const { defaultBrowsers } = require('./utils/browsersHelper');
+const { defaultBrowsers } = require('tiny-react-dev-utils/browsersHelper');
 const os = require('os');
 
 /**

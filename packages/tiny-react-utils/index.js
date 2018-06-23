@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const spawn = require('./utils/crossSpawn');
+const spawn = require('tiny-react-dev-utils/crossSpawn');
 const chalk = require('chalk');
 const fs = require('fs-extra');
 const path = require('path');
@@ -8,7 +8,7 @@ const execSync = require('child_process').execSync;
 const semver = require('semver');
 
 // ==========  const  ==========
-const directory = "temp_dir";
+const directory = "../../temp_dir";
 // These files should be allowed to remain on a failed install,
 // but then silently removed during the next create.
 const errorLogFilePatterns = [
@@ -85,6 +85,14 @@ function checkNpmVersion() {
 }
 
 function getPackageName(installPackage) {
+  if (installPackage.match(/^file:/)) {
+    const installPackagePath = installPackage.match(/^file:(.*)?$/)[1];
+    const installPackageJson = require(path.join(
+      installPackagePath,
+      'package.json'
+    ));
+    return Promise.resolve(installPackageJson.name);
+  }
   return Promise.resolve(installPackage);
 }
 
@@ -216,7 +224,10 @@ function run(
   originalDirectory,
   useYarn
 ) {
-  const packageToInstall = 'react-scripts';
+  const packageToInstall = `file:${path.resolve(
+    originalDirectory,
+    '../tiny-react-scripts'
+  )}`;
   const allDependencies = ['react', 'react-dom', packageToInstall];
 
   log('Installing packages. This might take a couple of minutes.');
@@ -246,9 +257,9 @@ function run(
     setCaretRangeForRuntimeDeps(packageName);
 
 
-    const init = require('./init.js');
+    // const init = require('../tiny-react-scripts/scripts/init.js');
     // call node_modules/react-scripts/scripts/init.js
-    init(root, appName, true, originalDirectory);
+    // init(root, appName, true, originalDirectory);
   })
   .catch(reason => {
     log();
