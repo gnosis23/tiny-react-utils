@@ -20,7 +20,9 @@ module.exports = function(
   verbose,
   originalDirectory
 ) {
-  const ownPath = path.join(appPath, '..');
+  const ownPackageName = require(path.join(__dirname, '..', 'package.json'))
+    .name;
+  const ownPath = path.join(appPath, 'node_modules', ownPackageName);
   // package.json
   const appPackage = require(path.join(appPath, 'package.json'));
   const useYarn = false;

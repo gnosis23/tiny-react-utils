@@ -257,9 +257,15 @@ function run(
     setCaretRangeForRuntimeDeps(packageName);
 
 
-    // const init = require('../tiny-react-scripts/scripts/init.js');
+    const init = require(path.resolve(
+      process.cwd(),
+      'node_modules',
+      packageName,
+      'scripts',
+      'init.js'
+    ));
     // call node_modules/react-scripts/scripts/init.js
-    // init(root, appName, true, originalDirectory);
+    init(root, appName, true, originalDirectory);
   })
   .catch(reason => {
     log();
