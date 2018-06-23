@@ -245,16 +245,10 @@ function run(
     checkNodeVersion(packageName);
     setCaretRangeForRuntimeDeps(packageName);
 
-    const scriptsPath = path.resolve(
-      process.cwd(),
-      'node_modules',
-      packageName,
-      'scripts',
-      'init.js'
-    );
-    // const init = require(scriptsPath);
+
+    const init = require('./init.js');
     // call node_modules/react-scripts/scripts/init.js
-    // init(root, appName, verbose, originalDirectory, template);
+    init(root, appName, true, originalDirectory);
   })
   .catch(reason => {
     log();

@@ -1,6 +1,7 @@
-const execSync = require('child_process').execSync;
+const path = require('path');
 
-const version = execSync('node -v')
-  .toString()
-  .trim();
-console.log(version);
+const init = require('./init.js');
+const root = path.resolve('temp_dir');
+const appName = 'temp_dir';
+const originalDirectory = process.cwd();
+init(root, appName, true, originalDirectory);
