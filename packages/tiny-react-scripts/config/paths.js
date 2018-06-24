@@ -11,5 +11,13 @@ const appDirectory = fs.realpathSync(process.cwd());
 const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 
 module.exports = {
-  appPath: resolveApp('.')
+  appPath: resolveApp('.'),
+  appHtml: resolveApp('public/index.html'),
+  appPublic: resolveApp('public'),
+  appIndexJs: resolveApp('src/index.js'),
+  appPackageJson: resolveApp('package.json'),
 };
+
+module.exports.useYarn = fs.existsSync(
+  path.join(module.exports.appPath, 'yarn.lock')
+);
