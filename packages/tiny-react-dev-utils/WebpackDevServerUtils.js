@@ -385,7 +385,11 @@ function prepareProxy(proxy, appPublicFolder) {
 }
 
 function choosePort(host, defaultPort) {
+  // 如果端口号被占用了，就会用下一个好的端口号
+  // eg: python -m SimpleHTTPServer 3000
+  // port = 3001
   return detect(defaultPort, host).then(
+    // 好的端口号
     port =>
       new Promise(resolve => {
         if (port === defaultPort) {
